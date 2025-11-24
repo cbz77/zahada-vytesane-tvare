@@ -699,7 +699,7 @@ function handlePuzzleInteraction(item) {
 	}
 	
 	else if (currentArea === 'kamenna_tvar' && !inventory.includes('cerny_klic')) {
-		showPopup("Kamenný erb je na porostlý mechem. Po bližším prozkoumání je pod mechem v prohlubni vidět otvor ve tvaru klíčové dírky.");
+		showPopup("Velký balvan je na porostlý mechem. Po bližším prozkoumání je v blízkosti \" tváře \" vidět otvor ve tvaru klíčové dírky.");
 	} else {
 		showPopup(item.text);
 	}
