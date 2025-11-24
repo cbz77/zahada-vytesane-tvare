@@ -32,7 +32,9 @@ const MAP = {
 		N: { img: `../assets/bgr/zacatek/zacatek_N.png`, pohled: "stromy", items: [
 			{ x: 380, y: 300, text: "Kříž tady stojí od pradávna.", type: 'text' }
 		] },
-		E: { img: `../assets/bgr/zacatek/zacatek_E.png`, pohled: "k lesní křižovatce", forward: "lesni_krizovatka", items: [] },
+		E: { img: `../assets/bgr/zacatek/zacatek_E.png`, pohled: "k lesní křižovatce", forward: "lesni_krizovatka", items: [
+			{ x: 450, y: 400, text: "Stará a rozpadlá závora brání vjezdu do lesů.", type: 'text' }
+		] },
 		W: { img: `../assets/bgr/zacatek/zacatek_W.png`, pohled: "zpátky domů", items: [
 			{ x: 400, y: 400, text: "Zpátky se vrátím, až záhadu vyřeším.", type: 'text' }
 		] },
@@ -462,7 +464,7 @@ function removeItem(itemId) {
 function updateInventoryDisplay() {
 	inventoryDisplay.innerHTML = '';
 	if (inventory.length === 0) {
-		inventoryDisplay.innerHTML = '<p style="text-align: center; color: #5a4d3f; font-size: 0.9em;">Inventář je prázdný. Hledejte stopy!</p>';
+		inventoryDisplay.innerHTML = '<p style="text-align: center; color: #5a4d3f; font-size: 0.9em;">Inventář je prázdný.</p>';
 		return;
 	}
 
@@ -886,7 +888,25 @@ function updateView() {
 		}, 250);
 
 		// 3. Aktualizace popisků
-		directionLabel.textContent = `Směr: ${currentDir}`;
+
+		let cz_currentDir = '';
+
+		switch (currentDir) {
+			case 'N':
+				cz_currentDir = 'S';
+				break;
+			case 'E':
+				cz_currentDir = 'V';
+				break;
+			case 'S':
+				cz_currentDir = 'J';
+				break;
+			case 'W':
+				cz_currentDir = 'Z';
+				break;
+		}
+
+		directionLabel.textContent = `Směr: ${cz_currentDir}`;
 		areaLabel.textContent = `Oblast: ${areaData.name}`;
 		pohledLabel.textContent = `${pohled}`;
 
