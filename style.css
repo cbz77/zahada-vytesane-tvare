@@ -1,0 +1,664 @@
+:root {
+	--red: #a31d1d;
+	--lighter-red: #f74040;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #1a1510;
+	color: #d0c6ac;
+	font-family: 'Cinzel', serif;
+	padding: 20px;
+	background-image: url('../assets/images/background.png');
+	background-size: cover;
+	background-attachment: fixed;
+	background-position: center;
+}
+
+.color-red {
+	color: var(--red);
+}
+
+.color-lighter-red {
+	color: var(--lighter-red);
+}
+
+.game-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	width: 800px;
+	max-width: 95%;
+}
+
+h1 {
+	color: #aa9c78;
+	text-shadow: 0 0 5px rgba(170, 156, 120, 0.5);
+	font-weight: 700;
+	text-align: center;
+}
+
+a {
+	color: #aa9c78;
+	text-shadow: 0 0 5px rgba(170, 156, 120, 0.5);
+}
+
+#viewport {
+	width: 100%;
+	height: 600px;
+	max-height: 70vh;
+	background-size: cover;
+	background-position: center;
+	border: 8px solid #3d3229;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 0 10px rgba(208, 198, 172, 0.1);
+	border-radius: 5px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-image 0.5s ease-in-out;
+	overflow: hidden;
+}
+
+
+.controls-row {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 20px;
+	flex-wrap: wrap;
+}
+
+.control-button {
+	background-color: #3d3229;
+	color: #d0c6ac;
+	border: 2px solid #5a4d3f;
+	padding: 12px 25px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-family: 'Cinzel', serif;
+	font-size: 1em;
+	transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+	text-transform: uppercase;
+}
+
+.control-button:hover:not(:disabled) {
+	background-color: #5a4d3f;
+	border-color: #aa9c78;
+	box-shadow: 0 0 10px rgba(170, 156, 120, 0.4);
+}
+
+.control-button:disabled {
+	background-color: #2b221a;
+	color: #5a4d3f;
+	cursor: not-allowed;
+	border-color: #2b221a;
+}
+
+/* popisky směru a oblasti */
+.area-label,
+.direction-label,
+.pohled-label {
+	position: absolute;
+	padding: 8px 15px;
+	background-color: rgba(30, 25, 20, 0.85);
+	color: #aa9c78;
+	font-size: 0.9em;
+	border: 1px solid #3d3229;
+	border-radius: 3px;
+	z-index: 5;
+	text-shadow: 0 0 3px #000;
+}
+
+.area-label {
+	top: 10px;
+	left: 10px;
+}
+
+.direction-label {
+	top: 10px;
+	right: 10px;
+}
+
+.pohled-label {
+	bottom: 10px;
+	right: 10px;
+}
+
+.save-game {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+	width:100px;
+	height:100px;
+}
+
+.save-game button {
+	position: absolute;
+	bottom:0px;
+	left:0px;
+	padding:5px;
+	color:white;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.save-game:hover button {
+	opacity: 1;
+}
+
+.save-game i {
+	font-size: 1em;
+}
+
+
+/* --- INVENTÁŘ --- */
+#inventory-display {
+	width: 100%;
+	min-height: 80px;
+	background-color: #2b221a;
+	border: 2px solid #3d3229;
+	border-radius: 5px;
+	padding: 10px;
+	display: flex;
+	gap: 18px;
+	align-items: center;
+	box-sizing: border-box;
+	margin-top: 10px;
+    /* overflow-x: scroll; */
+}
+
+.inventory-item {
+    width: 70px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	cursor: help;
+	color: #d0c6ac;
+    text-align: center;
+    font-size: 14px;
+}
+
+.inventory-icon {
+	font-size: 2em;
+	color: #aa9c78;
+	margin-bottom: 5px;
+	text-shadow: 0 0 5px #aa9c78;
+}
+
+
+/* --- STYLY AKTIVNÍCH MÍST (HOTSPOT) --- */
+.hotspot {
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	transform: translate(-50%, -50%);
+	cursor: pointer;
+	z-index: 6;
+	border-radius: 50%;
+	background: rgba(88, 88, 88, 0.4);
+	border: 2px solid #ffffff7c;
+	transition: background 0.2s, box-shadow 0.2s, opacity 0.5s;
+	opacity: 0;
+}
+
+.hotspot::after {
+	content: '';
+	display: block;
+	width: 200px;
+	height: 200px;
+	background-color: rgba(255, 0, 0, 0.1);
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+	opacity:0;
+}
+
+.hotspot:hover {
+	background: rgba(170, 68, 68, 0);
+	box-shadow: 0 0 15px #ffffff7c;
+	box-shadow: inset 0 0 15px #ffffff7c;
+	opacity: 1;
+}
+
+
+/* --- STYLY MODALU --- */
+.modal-backdrop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.85);
+	display: none;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+}
+
+#text-modal-backdrop {
+	z-index: 101;
+}
+
+.popup-window {
+	background-color: #1a1510;
+	border: 5px solid #3d3229;
+	color: #d0c6ac;
+	padding: 30px;
+	width: 450px;
+	max-width: 90%;
+	box-shadow: 0 0 50px rgba(170, 68, 68, 0.5);
+	border-radius: 5px;
+	text-align: center;
+	animation: fadeIn 0.3s ease-out;
+}
+
+.popup-window p{
+	font-family: 'Cormorant';
+	text-transform: none;
+	font-size: 1.2rem;
+	margin-bottom: 30px;
+}
+
+#input-puzzle-modal {
+	background-color: #1a1510;
+	border: 5px solid #3d3229;
+	padding: 30px;
+	width: 600px;
+	max-width: 90%;
+	text-align: center;
+}
+
+.puzzle-input-group {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 20px 0;
+}
+
+.puzzle-input-group label {
+	font-size: 1.1em;
+	color: #aa9c78;
+}
+
+.puzzle-input-group input[type="text"] {
+	padding: 10px;
+	border: 2px solid #5a4d3f;
+	background-color: #30261b;
+	color: #d0c6ac;
+	font-family: 'Cinzel', serif;
+	text-align: center;
+	text-transform: uppercase;
+	border-radius: 3px;
+}
+
+.puzzle-input-group input[type="text"]:focus {
+	outline: none;
+	border-color: #aa4444;
+	box-shadow: 0 0 5px #aa4444;
+}
+
+.control-button#solve-puzzle-button {
+	background-color: #701c1c;
+	color: #d0c6ac;
+	border: 2px solid #aa4444;
+}
+
+.control-button#solve-puzzle-button:hover:not(:disabled) {
+	background-color: #902020;
+	border-color: #aa4444;
+	box-shadow: 0 0 10px rgba(170, 120, 120, 0.4);
+}
+
+.loading-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgb(0, 0, 0);
+	color: #aa4444;
+
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
+
+	display: none;
+
+	align-items: center;
+	justify-content: center;
+	font-size: 2em;
+	z-index: 10;
+	border-radius: 5px;
+}
+
+.loading-overlay.visible {
+	opacity: 1;
+}
+
+.instruction-text {
+	text-align: center;
+	font-style: italic;
+	color: #aa9c78;
+}
+
+/* mobil */
+
+.mobil {
+	display: none;
+	width: 100%;
+	height: 100%;
+	background:black;
+	z-index: 100;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.mobil i {
+	color: #aa4444;
+	font-size: 2rem;
+}
+
+@media (max-width: 900px) {
+	
+	.mobil {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.controls-row {
+		flex-direction: column;
+		gap: 10px;
+	}
+}
+
+.add_item_text {
+	color: var(--lighter-red);
+	font-size: 1.1rem;
+	font-style: italic;
+}
+
+.inventory_img {
+	max-width: 200px;
+	margin: 0 auto;
+    border-radius: 5px;
+}
+
+.inventory_img:hover {
+	transform: scale(1.03);
+	transition: transform 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+.close-button {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 24px;
+	color: black;
+	cursor: pointer;
+	background: white;
+	font-size: 20px;
+	padding: 5px;
+	font-weight: bold;
+	width: 20px;
+	text-align: center;
+	border-radius: 5%;
+	border: 1px solid black;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* start screen */
+
+.start-screen {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	max-width: 800px;
+	height: 100%;
+	background-color: rgb(0, 0, 0);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	z-index: 10;
+}
+
+.start-screen-text {
+	width: calc(100% - 40px);
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	font-family: "Cormorant", serif;
+}
+
+.start-screen-text p {
+    margin: 0px;
+    padding: 20px;
+    color: #aa4444;
+    font-size: 1.3em;
+    text-transform: none;
+    text-shadow: 0px 0px 16px #b53b3b;
+}
+
+.start-screen-buttons {
+	width: 100%;
+	display: flex;
+    flex-direction: row;
+    justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	gap: 10px;
+}
+
+.start-screen-buttons button {
+    width: 300px;
+}
+
+
+
+/* puzzle */
+
+/* Kontejner pro celou sadu kol */
+.puzzle-wheels-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start; /* Udržuje šipky nahoře */
+    padding: 20px;
+	gap: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+/* Skupina pro jedno kolo a jeho šipku */
+.wheel-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 15px;
+}
+
+/* Šipka ukazující na vybraný symbol */
+.arrow {
+    font-size: 1.2em;
+    line-height: 1;
+    color: var(--red);
+    margin-bottom: 5px;
+    z-index: 10;
+	position: relative;
+	top: 0px;
+	font-weight: bold;
+}
+
+.wheel-number{
+ 	font-size: 1.2em;
+    line-height: 1;
+    color: var(--lighter-red);
+    margin-bottom: 5px;
+    z-index: 10;
+	position: relative;
+	top: 40px;
+	font-weight: bold;
+	transform: rotate(0deg) !important;
+}
+
+/* Samotný kotouč */
+.wheel {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #6b4c3e; /* Vzhled kamene/kovu */
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* Plynulá animace rotace */
+    transition: transform 0.4s ease-in-out;
+    user-select: none; /* Nepovolit výběr textu symbolů */
+}
+
+/* Stylování jednotlivých symbolů */
+.symbol {
+    position: absolute;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1em;
+    /* Ponechat symboly čitelné i při rotaci kotouče */
+    transition: transform 0.4s ease-in-out; 
+    
+    /* Větší čitelnost na mobilních zařízeních */
+    padding: 2px 4px; 
+    border-radius: 3px;
+    white-space: nowrap; /* Zabrání zalomení symbolu */
+}
+
+/* Umístění symbolů (pozor: transform symbolů je kompenzační, aby zůstaly vzpřímené) */
+.symbol.top { 
+    top: 0; 
+    left: 50%; 
+    transform: translate(-50%, 0%);
+}
+.symbol.right { 
+    top: 50%; 
+    right: 0; 
+    transform: translate(0%, -50%);
+}
+.symbol.bottom { 
+    bottom: 0; 
+    left: 50%; 
+    transform: translate(-50%, 0%);
+}
+.symbol.left { 
+    top: 50%; 
+    left: 0; 
+    transform: translate(0%, -50%);
+}
+
+/* footer */
+
+.footer{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	gap: 20px;
+	margin-top: 20px;
+}
+
+.credits-ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	margin-bottom: 50px;
+}
+
+.credits-ul li {
+	margin-bottom: 10px;
+}
+
+/* denik */
+
+.denik {
+	display: none;
+	width: calc(100% - 40px);
+	height: 560px;
+	margin:0 auto;
+	overflow: scroll;
+    overflow-x: hidden;
+	background: rgb(0, 0, 0);
+	color: rgb(59, 59, 59);
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index: 50;
+	padding:20px;
+    flex-direction: column;
+}
+
+.denik .zapis {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 40px;
+}
+
+.denik .zapis div {
+	font-family: 'Caveat', cursive;
+}
+
+.denik-nadpis {
+    font-family: 'Caveat', cursive;
+    color: #9f0000;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-top:40px;
+    font-size: 1.5rem;
+}
+
+.denik .zapis .den {
+	font-weight: bold;
+	color: #9f0000;
+	font-size: 1.5rem;
+}
+
+.denik .zapis .text {
+	color: #d0c6ac;
+	font-size: 2rem;
+}
+
+.denik .zavrit-denik {
+	margin: 0 auto;
+    margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #9f000044 #000000;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #9f000044;
+    border-radius: 10px;
+    border: 3px none #ffffff;
+  }

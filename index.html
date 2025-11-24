@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Záhada Vytesané Tváře</title>
+	
+	<!-- Favicony -->
+	<link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+	<link rel="shortcut icon" href="/favicon/favicon.ico" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+	<link rel="manifest" href="/favicon/site.webmanifest" />
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+		/* Nový Gotický/Viktoriánský Font */
+		@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@400;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Ephesis:wght@400;700&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+	</style>
+
+</head>
+
+<body>
+
+	<div class="game-container">
+		<h1>Záhada Vytesané Tváře</h1>
+		<div id="viewport">
+			<div class="loading-overlay" id="loading-overlay"><!-- Čekání na osud... --></div>
+			<div class="direction-label" id="direction-label"></div>
+			<div class="pohled-label" id="pohled-label"></div>
+			<div class="area-label" id="area-label"></div>
+			<div class="save-game" id="save-game"><button id="ulozit_hru" class="control-button" title="Uložit hru"><i class="fas fa-save"></i></button></div>
+
+			<div class="start-screen" id="start-screen">
+
+				<div class="start-screen-text">
+					<h2>Úvod</h2>
+					<!-- <p>
+						Jednoho dne jsi se rozhodl pro výlet na Štandl, na vrcholu se ti líbilo a rozhodl jsi se, že dolů půjdeš jinou cestou.<br><br>
+						Po cestě jsi narazil na podivný velký balvan, který na sobě měl vytesán jakýsi obličej, možná to byl kdysi erb.<br><br>
+						Nedalo ti to spát a dnes přišel den, kdy jsi se rozhodl přijít té záhadě na kloub. <br><br>
+						Přicházíš do ponurého lesa pod štandlem, pátrání začíná...
+					</p> -->
+
+					<p>
+
+						Jednoho dne ses vydal na výlet na Štandl. Na vrcholu panoval klid, jaký se jen málokdy poštěstí zažít, a rozhodl ses vrátit jinou, méně známou cestou. <br><br>
+
+						Po cestě jsi narazil na podivný balvan, stojící uprostřed lesa. Na jeho povrchu byl v mechu zřetelný vytesaný obličej… nebo to byl kdysi erb? Nedokázal jsi to rozpoznat, ale jeho výraz tě pronásledoval ještě dlouho potom. <br><br>
+
+						Od té chvíle jsi na něj nemohl přestat myslet. A dnes, po nocích plných neklidu a zvláštních snů, jsi se rozhodl vrátit a snad na něco přijít.<br><br>
+
+						Vstupuješ do ponurého lesa pod Štandlem. Je chladný mlhavý podzimní den. <br><br>
+
+						Pátrání začíná…
+
+					</p>
+
+				</div>
+
+				<div class="start-screen-buttons">
+					<button id="spustit_hru" class="control-button new-game"><i class="fas fa-masks-theater"></i> Spustit novou hru</button>
+					<button id="nacist_hru" class="control-button load-game"><i class="fas fa-compact-disc"></i> Načíst hru</button>
+				</div>
+				
+
+			</div>
+
+			
+			<!-- denik -->
+			<div id="denik" class="denik">
+				<span class="denik-nadpis">...předchozí záznamy jsou nečitelné...</span>
+				<div id="denik_zapisy"></div>
+				<button id="zavrit_denik" class="control-button zavrit-denik">Zavřít deník</button>
+			</div>
+
+		</div>
+
+		<!-- ovládací prvky -->
+		<div class="controls-wrapper" id="ovladaci_prvky">
+
+			<div class="controls-row">
+				<button class="control-button" id="turn-left" onclick="turnLeft()">
+					<i class="fas fa-circle-left"></i> Otočit se vlevo
+				</button>
+				<button class="control-button" id="move-forward" onclick="moveForward()">
+					<i class="fas fa-circle-up"></i><br> Vpřed
+				</button>
+				<button class="control-button" id="turn-right" onclick="turnRight()">
+					Otočit se vpravo <i class="fas fa-circle-right"></i>
+				</button>
+			</div>
+			<p class="instruction-text">Prozkoumej okolí a hledej stopy. Zde je tvůj inventář:</p>
+
+			<div id="inventory-display">
+				
+			</div>
+
+		</div>
+		
+		<div class="footer">
+			<div>
+				<span>© 2025 <a href="https://github.com/cbz77" target="_blank">Jan Gerek</a></span>
+			</div>
+			<div>
+				<a href="#" id="credits_link"><i class="fas fa-users"></i> Credits</a>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- mobil -->
+
+	<div class="mobil">
+		<div>
+			<i class="fas fa-circle-xmark"></i>
+		</div>
+
+		<div>
+			<h2>Mobilní zobrazení nepodporováno</h2>
+			<p>Z principu ovládání této hry je vhodné použít desktopovou verzi.</p>
+		</div>
+		
+	</div>
+
+	<!-- Modaly -->
+	<div class="modal-backdrop" id="text-modal-backdrop">
+		<div id="item-popup" class="popup-window">
+			<p id="popup-text"></p>
+			<button class="control-button" id="close-popup" onclick="hidePopup('text-modal-backdrop')">Zavřít</button>
+		</div>
+	</div>
+
+	<div class="modal-backdrop" id="puzzle-modal-backdrop">
+		<div id="input-puzzle-modal" class="popup-window">
+
+			<h2>Kamenný mechanismus</h2>
+			<p>Po otočení klíčem se ve skále objevily čtyři kamené disky. Jsou na nich různé symboly. Jaká může být kombinace?</p>
+			<!-- <p>Vyplň 4 prastaré symboly:<br><br></p>
+			<div class="puzzle-input-group">
+				<label for="symbol1">Symbol I:</label>
+				<input type="text" id="symbol1" maxlength="3">
+
+				<label for="symbol2">Symbol II:</label>
+				<input type="text" id="symbol2" maxlength="4">
+
+				<label for="symbol3">Symbol III:</label>
+				<input type="text" id="symbol3" maxlength="4">
+
+				<label for="symbol4">Symbol IV:</label>
+				<input type="text" id="symbol4" maxlength="6">
+			</div>
+			<button id="solve-puzzle-button" class="control-button" onclick="solvePuzzle()">Odemknout</button>
+            <button class="control-button" id="close-popup" onclick="hidePopup('puzzle-modal-backdrop')">Zavřít</button> -->
+
+			<div class="puzzle-wheels-container">
+			
+				<div class="wheel-group">
+					<div class="arrow"><i class="fas fa-caret-down"></i></div>
+					<div id="wheel1" class="wheel" data-current-symbol="KORUNA" data-symbols='["ERB", "KORUNA", "LIST", "KRIZ"]'
+						data-current-index="1" style="transform: rotate(90deg);">
+						<div class="wheel-number">I.</div>
+						<div class="symbol top"><i class="fas fa-shield"></i></div>
+						<div class="symbol right"><i class="fas fa-crown"></i></div>
+						<div class="symbol bottom"><i class="fas fa-leaf"></i></div>
+						<div class="symbol left"><i class="fas fa-cross"></i></div>
+					</div>
+				</div>
+			
+				<div class="wheel-group">
+					<div class="arrow"><i class="fas fa-caret-down"></i></div>
+					<div id="wheel2" class="wheel" data-current-symbol="KRIZ" data-symbols='["LIST", "KORUNA", "ERB", "KRIZ"]'
+						data-current-index="3" style="transform: rotate(270deg);">
+						<div class="wheel-number">II.</div>
+						<div class="symbol top"><i class="fas fa-leaf"></i></div>
+						<div class="symbol right"><i class="fas fa-crown"></i></div>
+						<div class="symbol bottom"><i class="fas fa-shield"></i></div>
+						<div class="symbol left"><i class="fas fa-cross"></i></div>
+					</div>
+				</div>
+			
+				<div class="wheel-group">
+					<div class="arrow"><i class="fas fa-caret-down"></i></div>
+					<div id="wheel3" class="wheel" data-current-symbol="ERB" data-symbols='["KRIZ", "LIST", "ERB", "KORUNA"]'
+						data-current-index="2" style="transform: rotate(180deg);">
+						<div class="wheel-number">III.</div>
+						<div class="symbol top"><i class="fas fa-cross"></i></div>
+						<div class="symbol right"><i class="fas fa-leaf"></i></div>
+						<div class="symbol bottom"><i class="fas fa-shield"></i></div>
+						<div class="symbol left"><i class="fas fa-crown"></i></div>
+					</div>
+				</div>
+			
+				<div class="wheel-group">
+					<div class="arrow"><i class="fas fa-caret-down"></i></div>
+					<div id="wheel4" class="wheel" data-current-symbol="LIST" data-symbols='["KORUNA", "LIST", "KRIZ", "ERB"]'
+						data-current-index="1" style="transform: rotate(90deg);">
+						<div class="wheel-number">IV.</div>
+						<div class="symbol top"><i class="fas fa-crown"></i></div>
+						<div class="symbol right"><i class="fas fa-leaf"></i></div>
+						<div class="symbol bottom"><i class="fas fa-cross"></i></div>
+						<div class="symbol left"><i class="fas fa-shield"></i></div>
+					</div>
+				</div>
+			
+			</div>
+
+			<button id="solve-puzzle-button" class="control-button" onclick="solvePuzzle()"><i class="fas fa-key"></i> Odemknout</button>
+			<button class="control-button" id="close-popup" onclick="hidePopup('puzzle-modal-backdrop')">Zavřít</button>
+
+
+		</div>
+	</div>
+	<!-- Konec Modalů -->
+
+	<div id="lightbox-backdrop" class="modal-backdrop" style="display: none;">
+		<div class="modal-content-wide" onclick="hidePopup('lightbox-backdrop')">
+			<img id="lightbox-image" src="" alt="Mapa v plném rozlišení" style="max-width: 90vw; max-height: 90vh;">
+			<span class="close-button" style="top: 10px; right: 20px;">&times;</span>
+		</div>
+	</div>
+
+	<script src="game.js"></script>
+	
+</body>
+
+</html>
