@@ -642,11 +642,27 @@ a {
 	margin-bottom: 40px;
 }
 
-.denik .napoveda-text p, .denik .napoveda-text li {
+/* napoveda */
+
+#napoveda {
 	font-family: 'Cormorant';
-	color: #d0c6ac;
-	font-size: 1.5rem;
+	color: wheat;
+	font-size: 1.1rem;
 	text-transform: none;
+}
+
+#napoveda h2 {
+	color: var(--lighter-red);
+	text-align: center;
+}
+
+#napoveda h3 {
+	color: var(--lighter-red);
+	margin-bottom: 10px;
+}
+
+#napoveda ul li{
+	margin-top: 0px;
 }
 
 /* ===== Scrollbar CSS ===== */
