@@ -1090,6 +1090,21 @@ window.onload = function () {
 		denik.style.display = 'none';
 	};
 
+	/* NAPOVEDA */
+
+	let napoveda_link = document.getElementById('napoveda_link');
+	napoveda_link.onclick = () => {
+		let napoveda = document.getElementById('napoveda');
+		napoveda.style.display = 'flex';
+	};
+
+	/* zavrit napoveda */
+	let close_napoveda = document.getElementById('zavrit_napoveda');
+	close_napoveda.onclick = () => {
+		let napoveda = document.getElementById('napoveda');
+		napoveda.style.display = 'none';
+	};
+
 };
 
 window.addEventListener('beforeunload', function (e) {

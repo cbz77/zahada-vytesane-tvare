@@ -80,6 +80,31 @@
 				<button id="zavrit_denik" class="control-button zavrit-denik">Zavřít deník</button>
 			</div>
 
+			<!-- napoveda -->
+
+			<div id="napoveda" class="denik">
+				<span class="denik-nadpis">Nápověda</span>
+
+				<p class="napoveda-text">
+
+					<h3>Rozložení obrazovky</h3>
+					<p>Každá obrazovka (lokace) se skládá z několika klíčových prvků:
+						<ul>
+							<li>Vlevo nahoře: místo, kde se právě nacházíte</li>
+							<li>Vpravo nahoře: směr pohledu / pohybu vpřed</li>
+							<li>Vpravo dole: popis kontrétního směru - pohledu</li>
+						</ul>
+					</p>
+
+					<ul>
+						<li>Pohyb vlevo, vpravo: otáčení se na místě v dané oblasti</li>
+						<li>Pohyb vpřed - přesun do další oblasti</li>
+					</ul>
+				</p>
+				
+				<button id="zavrit_napoveda" class="control-button zavrit-denik">Zavřít</button>
+			</div>
+
 		</div>
 
 		<!-- ovládací prvky -->
@@ -107,6 +132,9 @@
 		<div class="footer">
 			<div>
 				<span>© 2025 <a href="https://github.com/cbz77" target="_blank">Jan Gerek</a></span>
+			</div>
+			<div>
+				<a href="#" id="napoveda_link"><i class="fas fa-question-circle"></i> Nápověda</a>
 			</div>
 			<div>
 				<a href="#" id="credits_link"><i class="fas fa-users"></i> Credits</a>
@@ -142,22 +170,6 @@
 
 			<h2>Kamenný mechanismus</h2>
 			<p>Po otočení klíčem se ve skále objevily čtyři kamené disky. Jsou na nich různé symboly. Jaká může být kombinace?</p>
-			<!-- <p>Vyplň 4 prastaré symboly:<br><br></p>
-			<div class="puzzle-input-group">
-				<label for="symbol1">Symbol I:</label>
-				<input type="text" id="symbol1" maxlength="3">
-
-				<label for="symbol2">Symbol II:</label>
-				<input type="text" id="symbol2" maxlength="4">
-
-				<label for="symbol3">Symbol III:</label>
-				<input type="text" id="symbol3" maxlength="4">
-
-				<label for="symbol4">Symbol IV:</label>
-				<input type="text" id="symbol4" maxlength="6">
-			</div>
-			<button id="solve-puzzle-button" class="control-button" onclick="solvePuzzle()">Odemknout</button>
-            <button class="control-button" id="close-popup" onclick="hidePopup('puzzle-modal-backdrop')">Zavřít</button> -->
 
 			<div class="puzzle-wheels-container">
 			
