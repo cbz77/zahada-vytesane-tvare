@@ -135,7 +135,7 @@ a {
 	height:100px;
 }
 
-.save-game button {
+.save-game #ulozit_hru {
 	position: absolute;
 	bottom:0px;
 	left:0px;
@@ -145,7 +145,18 @@ a {
 	transition: opacity 0.2s ease-in-out;
 }
 
-.save-game:hover button {
+.save-game #nacist_hru {
+	position: absolute;
+	bottom:0px;
+	left:30px;
+	padding:5px;
+	color:white;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.save-game:hover #ulozit_hru,
+.save-game:hover #nacist_hru {
 	opacity: 1;
 }
 

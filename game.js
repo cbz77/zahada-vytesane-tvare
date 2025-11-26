@@ -997,6 +997,7 @@ window.onload = function () {
 	let ovladaci_prvky = document.getElementById('ovladaci_prvky');
 
 	let start_btn = document.getElementById('spustit_hru');
+	let load_btn_start = document.getElementById('nacist_hru_start');
 	let load_btn = document.getElementById('nacist_hru');
 	let save_btn = document.getElementById('ulozit_hru');
 
@@ -1021,48 +1022,38 @@ window.onload = function () {
 	};
 
 	/* LOAD GAME*/
+
+	load_btn_start.onclick = () => {
+		nacistHru();
+	};
+
 	load_btn.onclick = () => {
-		
-		let saved_game_json = this.localStorage.getItem("saved_game");
-
-		if(saved_game_json.length == 0) {
-			alert("Žádná uložená hra k načtení.");
-			return;
-		}else{
-
-			startScreen.style.display = 'none';
-
-			let saved_game = JSON.parse(saved_game_json);
-
-			currentArea = saved_game.currentArea;
-			currentDirectionIndex = saved_game.currentDirectionIndex;
-			inventory = saved_game.inventory;
-			solvedPuzzles = saved_game.solvedPuzzles;
-			addedItems = saved_game.addedItems;
-
-			this.localStorage.setItem("hra_spustena", 1);
-
-			ovladaci_prvky.style.display = 'block';
-
-			updateView();
+		let potvrzeni_nacteni = this.confirm("Chcete načíst uloženou hru?");
+		if(potvrzeni_nacteni) {
+			nacistHru();
 		}
-
-		
 	};
 
 	/* SAVE GAME */
 	save_btn.onclick = () => {
-		let saved_game = {
-			currentArea: currentArea,
-			currentDirectionIndex: currentDirectionIndex,
-			inventory: inventory,
-			solvedPuzzles: solvedPuzzles,
-			addedItems: addedItems
-		};
-		this.localStorage.setItem("saved_game", JSON.stringify(saved_game));
 
-		if(this.localStorage.getItem("saved_game").length > 0) {
-			alert("Hra byla uložena.");
+		let potvrzeni_ulozeni = this.confirm("Chcete uložit hru?");
+
+		if(potvrzeni_ulozeni) {
+
+			let saved_game = {
+				currentArea: currentArea,
+				currentDirectionIndex: currentDirectionIndex,
+				inventory: inventory,
+				solvedPuzzles: solvedPuzzles,
+				addedItems: addedItems
+			};
+
+			this.localStorage.setItem("saved_game", JSON.stringify(saved_game));
+
+			if(this.localStorage.getItem("saved_game").length > 0) {
+				alert("Hra byla uložena.");
+			}
 		}
 	};
 
@@ -1106,6 +1097,33 @@ window.onload = function () {
 	};
 
 };
+
+function nacistHru(){
+
+	let saved_game_json = this.localStorage.getItem("saved_game");
+
+	if(saved_game_json.length == 0) {
+		alert("Žádná uložená hra k načtení.");
+		return;
+	}else{
+
+		startScreen.style.display = 'none';
+
+		let saved_game = JSON.parse(saved_game_json);
+
+		currentArea = saved_game.currentArea;
+		currentDirectionIndex = saved_game.currentDirectionIndex;
+		inventory = saved_game.inventory;
+		solvedPuzzles = saved_game.solvedPuzzles;
+		addedItems = saved_game.addedItems;
+
+		this.localStorage.setItem("hra_spustena", 1);
+
+		ovladaci_prvky.style.display = 'block';
+
+		updateView();
+	}
+}
 
 window.addEventListener('beforeunload', function (e) {
 
