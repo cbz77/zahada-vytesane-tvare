@@ -705,36 +705,6 @@ function handlePuzzleInteraction(item) {
 	}
 }
 
-/**
- * Zpracuje řešení hádanky.
- */
-/* window.solvePuzzle = function () {
-	const sym1 = document.getElementById('symbol1').value.toUpperCase();
-	const sym2 = document.getElementById('symbol2').value.toUpperCase();
-	const sym3 = document.getElementById('symbol3').value.toUpperCase();
-	const sym4 = document.getElementById('symbol4').value.toUpperCase();
-
-	// Správné řešení: KLIC, LIST, KRIZ, PEČET
-	if (sym1 === 'ERB' && sym2 === 'LIST' && (sym3 === 'KRIZ' || sym3 == 'KŘÍŽ') && sym4 === 'KORUNA') {
-
-		// Otevření nové cesty do Jeskyně
-		MAP['kamenna_tvar']['E'].forward = 'jeskyne';
-
-		hidePopup('puzzle-modal-backdrop');
-		showPopup('Mechanismus zaskřípe a s hlasitým duněním se balvan odsune. <br><br><span class="color-lighter-red">Objevil se tajný vstup do jeskyně!</span><br><br> Nyní se musím pouze odhodlat a jít vpřed.');
-
-		// Zrušení hádanky, už není potřeba
-		const puzzleHotspot = MAP['kamenna_tvar']['N'].items.find(i => i.type === 'puzzle');
-		if (puzzleHotspot) puzzleHotspot.text = "Vstup do jeskyně je nyní otevřen.";
-
-		updateView();
-
-	} else {
-		showPopup('Nic se nestalo.');
-	}
-} */
-
-
 
 /**
 * Správný symbol je určen rotací kola a je vyčten z jeho datového atributu.
