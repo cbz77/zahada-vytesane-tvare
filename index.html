@@ -35,18 +35,15 @@
 			<div class="direction-label" id="direction-label"></div>
 			<div class="pohled-label" id="pohled-label"></div>
 			<div class="area-label" id="area-label"></div>
-			<div class="save-game" id="save-game"><button id="ulozit_hru" class="control-button" title="Uložit hru"><i class="fas fa-save"></i></button></div>
+			<div class="save-game" id="save-game">
+				<button id="ulozit_hru" class="control-button" title="Uložit hru"><i class="fas fa-save"></i></button> 
+				<button id="nacist_hru" class="control-button" title="Načíst hru"><i class="fas fa-compact-disc"></i></button>
+			</div>
 
 			<div class="start-screen" id="start-screen">
 
 				<div class="start-screen-text">
 					<h2>Úvod</h2>
-					<!-- <p>
-						Jednoho dne jsi se rozhodl pro výlet na Štandl, na vrcholu se ti líbilo a rozhodl jsi se, že dolů půjdeš jinou cestou.<br><br>
-						Po cestě jsi narazil na podivný velký balvan, který na sobě měl vytesán jakýsi obličej, možná to byl kdysi erb.<br><br>
-						Nedalo ti to spát a dnes přišel den, kdy jsi se rozhodl přijít té záhadě na kloub. <br><br>
-						Přicházíš do ponurého lesa pod štandlem, pátrání začíná...
-					</p> -->
 
 					<p>
 
@@ -66,7 +63,7 @@
 
 				<div class="start-screen-buttons">
 					<button id="spustit_hru" class="control-button new-game"><i class="fas fa-masks-theater"></i> Spustit novou hru</button>
-					<button id="nacist_hru" class="control-button load-game"><i class="fas fa-compact-disc"></i> Načíst hru</button>
+					<button id="nacist_hru_start" class="control-button load-game"><i class="fas fa-compact-disc"></i> Načíst hru</button>
 				</div>
 				
 
@@ -78,6 +75,44 @@
 				<span class="denik-nadpis">...předchozí záznamy jsou nečitelné...</span>
 				<div id="denik_zapisy"></div>
 				<button id="zavrit_denik" class="control-button zavrit-denik">Zavřít deník</button>
+			</div>
+
+			<!-- napoveda -->
+			<div id="napoveda" class="denik">
+				<h2>Nápověda</h2>
+
+				<h3>Rozložení obrazovky</h3>
+				<p>Každá obrazovka (lokace) se skládá z několika klíčových prvků:
+					<ul>
+						<li>Vlevo nahoře: místo, kde se právě nacházíte</li>
+						<li>Vpravo nahoře: směr pohledu / pohybu vpřed</li>
+						<li>Vpravo dole: popis kontrétního směru - co lze vidět</li>
+					</ul>
+				</p>
+
+				<h3>Pohyb</h3>
+				<ul>
+					<li>Pohyb vlevo, vpravo: otáčení se na místě v dané oblasti</li>
+					<li>Pohyb vpřed - přesun do další oblasti</li>
+				</ul>
+
+				<h3>Interakce</h3>
+				<p>
+					Najetím myši na hlavní obrazovku můžete odhalit aktivní místa. Ty jsou viditelné jako malé bílé kolečka. <br>
+					Prozkoumávejte místa, shromažďujte stopy, postoupíte tak v příběhu. Věnujte pozornost detailům v popisech, protože vás navedou na správnou cestu.
+				</p>
+
+				<h3>Inventář</h3>
+				<p>Některá aktivní místa mohou vést k přidání předmětu do inventáře. V inventáři je poté možné předmět prozkoumat podrobněji kliknutím na daný předmět.</p>
+
+				<h3>Uložení / načtení hry</h3>
+				<p>V levém dolním rohu herního okna se po najetí myši zobrazí tlačítka pro uložení a načtení hry.<br>
+					Po kliknutí na tlačítko "uložit hru" se postup hrou uloží do paměti prohlížeče. Po opětovné uložení hry přepíše předchozí pozici.<br>
+					Načtení hry načte uloženou hru, pokud uložená hra existuje.
+					Spuštění nové hry vymaže uloženou hru.
+				</p>
+				
+				<button id="zavrit_napoveda" class="control-button zavrit-denik">Zavřít</button>
 			</div>
 
 		</div>
@@ -107,6 +142,9 @@
 		<div class="footer">
 			<div>
 				<span>© 2025 <a href="https://github.com/cbz77" target="_blank">Jan Gerek</a></span>
+			</div>
+			<div>
+				<a href="#" id="napoveda_link"><i class="fas fa-question-circle"></i> Nápověda</a>
 			</div>
 			<div>
 				<a href="#" id="credits_link"><i class="fas fa-users"></i> Credits</a>
@@ -142,22 +180,6 @@
 
 			<h2>Kamenný mechanismus</h2>
 			<p>Po otočení klíčem se ve skále objevily čtyři kamené disky. Jsou na nich různé symboly. Jaká může být kombinace?</p>
-			<!-- <p>Vyplň 4 prastaré symboly:<br><br></p>
-			<div class="puzzle-input-group">
-				<label for="symbol1">Symbol I:</label>
-				<input type="text" id="symbol1" maxlength="3">
-
-				<label for="symbol2">Symbol II:</label>
-				<input type="text" id="symbol2" maxlength="4">
-
-				<label for="symbol3">Symbol III:</label>
-				<input type="text" id="symbol3" maxlength="4">
-
-				<label for="symbol4">Symbol IV:</label>
-				<input type="text" id="symbol4" maxlength="6">
-			</div>
-			<button id="solve-puzzle-button" class="control-button" onclick="solvePuzzle()">Odemknout</button>
-            <button class="control-button" id="close-popup" onclick="hidePopup('puzzle-modal-backdrop')">Zavřít</button> -->
 
 			<div class="puzzle-wheels-container">
 			
