@@ -13,11 +13,11 @@ if(saved_game == null || saved_game == "") this.localStorage.setItem("saved_game
 const INVENTORY_ITEMS = {
 	'vizitka': { name: 'Vizitka', icon: 'fa-address-card', tooltip: 'Zašlá vizitka, jméno někdo začmáral, ale adresa směřuje někam pod zámek do Frýdku.', type: "image", popupText: "<img src='../assets/images/inventory/vizitka.png' class='inventory_img'>" },
 	'cerny_klic': { name: 'Černý klíč', icon: 'fa-key', tooltip: 'Starý, černý klíč. Nalezený archeologem při vykopávkách pod Štandlem.' },
-	'dubovy_list': { name: 'Nákres listu', icon: 'fa-leaf', tooltip: 'Nákres reliéfu dubového listu, který byl na soše.', type: "image", popupText: "<img src='../assets/images/inventory/list.png' class='inventory_img'>" },
+	'dubovy_list': { name: 'Nákres listu', icon: 'fa-leaf', tooltip: 'Nákres reliéfu dubového listu, který byl na soše na místeckém náměstí.', type: "image", popupText: "<img src='../assets/images/inventory/list.png' class='inventory_img'>" },
 	'kriz_z_hrobu': { name: 'Nákres kříže', icon: 'fa-cross', tooltip: 'Nákres Kříže z náhrobku u kostela sv. Jošta.', type: "image", popupText: "<img src='../assets/images/inventory/kriz.png' class='inventory_img'>" },
 	'koruna': { name: 'Nákres koruny', icon: 'fa-crown', tooltip: 'Královská koruna, která byla vyryta na zámecké věži.', type: "image", popupText: "<img src='../assets/images/inventory/koruna.png' class='inventory_img'>" },
 	'mapa': { name: 'Mapa', icon: 'fa-map', tooltip: 'Mapa z vrcholu Štandlu.', type: "image", popupText: "<img src='../assets/images/inventory/mapa.png' class='inventory_img'>" },
-	'erb': { name: 'Nákres Erbu', icon: 'fa-shield', tooltip: 'Erb z kamene, nalezený ve vykopávkách.', type: "image", popupText: "<img src='../assets/images/inventory/erb.png' class='inventory_img'>" },
+	'erb': { name: 'Nákres Erbu', icon: 'fa-shield', tooltip: 'Erb z kamene, nalezený ve vykopávkách staré Lipiny.', type: "image", popupText: "<img src='../assets/images/inventory/erb.png' class='inventory_img'>" },
 	'strep': { name: 'Střepy', icon: 'fa-icicles', tooltip: 'Keramické střepy, nalezené v kameném pomníku.', type: "image", popupText: "<img src='../assets/images/inventory/strepy.png' class='inventory_img'>" },
 	'lopatka': { name: 'Lopatka', icon: 'fa-arrow-pointer', tooltip: 'Stará lopatka, nalezená u vykopávek.', type: "image", popupText: "<img src='../assets/images/inventory/lopatka.png' class='inventory_img'>" },
 	'denik': { name: 'Deník', icon: 'fa-book', tooltip: 'Potrhaný deník, ležel u těla Černé Barbory v tajné jeskyni.', type: "denik" },
@@ -62,8 +62,8 @@ const MAP = {
 		] },
 		E: { img: `../assets/bgr/cesta_pole/cesta_pole_E.png`, pohled: "les", items: [] },
 		W: { img: `../assets/bgr/cesta_pole/cesta_pole_W.png`, pohled: "pole", items: [
-			{ x: 420, y: 250, text: "starý a otrhaný strašák, nahání mi hrůzu.", type: 'text' },
-			{ x: 680, y: 520, text: "rezavý kbelík, je prázdný.", type: 'text' },
+			{ x: 420, y: 250, text: "Starý a otrhaný strašák, nahání mi hrůzu.", type: 'text' },
+			{ x: 680, y: 520, text: "Rezavý kbelík, je prázdný.", type: 'text' },
 
 		] },
 		S: { img: `../assets/bgr/cesta_pole/cesta_pole_S.png`, pohled: "k rozcestí", forward: "lesni_krizovatka", items: [] },
@@ -111,7 +111,7 @@ const MAP = {
 		] },
 		S: {
 			img: `../assets/bgr/vykopavky/vykopavky_S.png`, pohled: "opuštěné vykopávky", items: [
-				{ x: 515, y: 235, text: "ve výkopu ležela stará vizitka <br><br> <img src='assets/bgr/vykopavky/vizitka_hlina.png' class='inventory_img' onclick='event.stopPropagation(); showLightbox(\"assets/bgr/vykopavky/vizitka_hlina.png\")'>" + ikona_stopa + " Získali jste stopu <span class='color-lighter-red'>Zašlá vizitka.</span>", itemKey: 'vizitka', type: 'item' },
+				{ x: 515, y: 235, text: "Ve výkopu ležela stará vizitka <br><br> <img src='assets/bgr/vykopavky/vizitka_hlina.png' class='inventory_img' onclick='event.stopPropagation(); showLightbox(\"assets/bgr/vykopavky/vizitka_hlina.png\")'>" + ikona_stopa + " Získali jste stopu <span class='color-lighter-red'>Zašlá vizitka.</span>", itemKey: 'vizitka', type: 'item' },
 				{ x: 135, y: 215, text: "V kameni se rýsuje zašlý středověký erb. Čas už ohlodal jeho obrysy. Nakreslím si ho.<br><br> <img src='assets/bgr/vykopavky/kamen_erb.png' class='inventory_img' onclick='event.stopPropagation(); showLightbox(\"assets/bgr/vykopavky/kamen_erb.png\")'>" + ikona_stopa + " Získali jste stopu <span class='color-lighter-red'>kamenný erb.</span>", type: 'item', itemKey: "erb" }
 			]
 		},
@@ -324,7 +324,9 @@ const MAP = {
 	zamek_nadvori: {
 		name: "Zámek nádvoří",
 		E: { img: `../assets/bgr/zamek_nadvori/nadvori_E.png`, pohled: "bránou na náměstí", forward: "zamek_namesti", },
-		S: { img: `../assets/bgr/zamek_nadvori/nadvori_S.png`, pohled: "zámecké nádvoří", items: [] },
+		S: { img: `../assets/bgr/zamek_nadvori/nadvori_S.png`, pohled: "zámecké nádvoří", items: [
+			{ x: 600, y: 300, text: "Nádvoří zeje prázdnotou.", type: 'text' }
+		] },
 		W: { img: `../assets/bgr/zamek_nadvori/nadvori_W.png`, pohled: "k věži", forward: "vez", items: [] },
 		N: { img: `../assets/bgr/zamek_nadvori/nadvori_N.png`, pohled: "před frýdecký zámek", forward: "frydecky_zamek", items: [] },
 	},
@@ -352,7 +354,7 @@ const MAP = {
 	kostel_josta: {
 		name: "Kostel sv. Jošta",
 		E: { img: `../assets/bgr/jost/jost_E.png`, pohled: "vstup do kostela", items: [
-			{ x: 650, y: 380, text: "Na ceduli stojí: <i>\" Kdo se nebojí musí do kostela! \"</i> ", type: 'text' }
+			{ x: 650, y: 380, text: "Pozdně renesanční stavba z roku 1612. <br> Okolní park do konce 19. století sloužil jako hřbitov.", type: 'text' }
 		] },
 		S: { img: `../assets/bgr/jost/jost_S.png`, pohled: "okolo kostela", forward: "vedle_kostela", },
 		N: { img: `../assets/bgr/jost/jost_N.png`, pohled: "po schodišti na náměstí", forward: "zamek_namesti", items: [
@@ -367,7 +369,9 @@ const MAP = {
 		E: {
 			img: `../assets/bgr/jost_hrob/jost_hrob_E.png`, pohled: "stará škola", items: [],
 		},
-		S: { img: `../assets/bgr/jost_hrob/jost_hrob_S.png`, pohled: "socha sv. Floriána", items: [] },
+		S: { img: `../assets/bgr/jost_hrob/jost_hrob_S.png`, pohled: "socha sv. Floriána", items: [
+			{ x: 250, y: 400, text: "Socha patrona hasičů, sv. Floriána", type: 'text' }
+		] },
 		N: { img: `../assets/bgr/jost_hrob/jost_hrob_N.png`, pohled: "náhrobní kámen", items: [
 			{ x: 250, y: 400, text: "Na náhrobním kameni je velký, kamenný kříž. <br>Nakreslím si ho.<br><br> <img src='assets/bgr/jost_hrob/nahrobek.png' class='inventory_img' onclick='event.stopPropagation(); showLightbox(\"assets/bgr/jost_hrob/nahrobek.png\")'> " + ikona_stopa + " Získali jste stopu <span class='color-lighter-red'>kříž.</span>", itemKey: 'kriz_z_hrobu', type: 'item' }
 		] },
@@ -549,7 +553,7 @@ function extractImageUrl(htmlString) {
  */
 window.showLightbox = function (imagePath) {
 	// 1. Zavři aktuální textový popup, abys viděl lightbox
-	hidePopup('text-modal-backdrop');
+	//hidePopup('text-modal-backdrop');
 
 	// 2. Najdi lightbox elementy
 	const lightboxBackdrop = document.getElementById('lightbox-backdrop');
@@ -874,6 +878,14 @@ function updateView() {
 		// 5. Vykreslení Hotspotů a Inventáře
 		renderHotspots();
 		updateInventoryDisplay();
+
+
+		//jeskyne - prvni prichod
+		if(currentArea === 'jeskyne' && currentDir === 'W' && !solvedPuzzles.includes('jeskyne_prichod')) {
+			showPopup("Proboha! To je snad Černá Barbora! <br> Kdysi jsem četl o jejím příběhu v městské kronice. Ale myslel jsem, že je to pouze pověra!");
+			solvedPuzzles.push('jeskyne_prichod');
+		}
+
 	};
 
 	img.onerror = () => {
@@ -936,6 +948,14 @@ window.moveForward = function () {
 	const currentDir = DIRECTIONS[currentDirectionIndex];
 	const viewData = MAP[currentArea][currentDir];
 
+	//jeskyne - zakazani vystupu kdyz nemam denik
+	if(currentArea === 'jeskyne' && currentDir === 'E' && !inventory.includes('denik')) {
+		if(!inventory.includes('denik')) {
+			showPopup("Ještě se tady porozhlédnu.");
+			return;
+		}
+	}
+
 	if (viewData.forward) {
 		currentArea = viewData.forward;
 
@@ -950,8 +970,6 @@ window.moveForward = function () {
             updateView();
 		}, 500)
 		
-	} else {
-		showPopup("Nelze pokračovat vpřed.");
 	}
 
 	if(currentArea === 'konec') {
@@ -1149,7 +1167,7 @@ function rotateWheel(event) {
 
 const denik_zapisy = {
 	1: {
-		"den": "8. února",
+		"den": "8. února 1728",
 		"text": "Dnes jsem vstala před úsvitem a ve studených zdech kláštera se modlila za klid, který stále nepřichází. Při práci v kuchyni jsem opět cítila, že mé srdce patří jinam, a i když se snažím být poslušná, mé myšlenky utíkají ven z kláštera k životu, který jsem si nikdy nedovolila žít."
 	},
 	2: {
