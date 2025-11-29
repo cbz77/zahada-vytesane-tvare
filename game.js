@@ -32,7 +32,9 @@ const MAP = {
 		N: { img: `../assets/bgr/zacatek/zacatek_N.png`, pohled: "stromy", items: [
 			{ x: 380, y: 300, text: "Kříž tady stojí od pradávna.", type: 'text' }
 		] },
-		E: { img: `../assets/bgr/zacatek/zacatek_E.png`, pohled: "k lesní křižovatce", forward: "lesni_krizovatka", items: [] },
+		E: { img: `../assets/bgr/zacatek/zacatek_E.png`, pohled: "k lesní křižovatce", forward: "lesni_krizovatka", items: [
+			{ x: 450, y: 400, text: "Stará a rozpadlá závora brání vjezdu do lesů.", type: 'text' }
+		] },
 		W: { img: `../assets/bgr/zacatek/zacatek_W.png`, pohled: "zpátky domů", items: [
 			{ x: 400, y: 400, text: "Zpátky se vrátím, až záhadu vyřeším.", type: 'text' }
 		] },
@@ -466,7 +468,7 @@ function removeItem(itemId) {
 function updateInventoryDisplay() {
 	inventoryDisplay.innerHTML = '';
 	if (inventory.length === 0) {
-		inventoryDisplay.innerHTML = '<p style="text-align: center; color: #5a4d3f; font-size: 0.9em;">Inventář je prázdný. Hledejte stopy!</p>';
+		inventoryDisplay.innerHTML = '<p style="text-align: center; color: #5a4d3f; font-size: 0.9em;">Inventář je prázdný.</p>';
 		return;
 	}
 
@@ -703,7 +705,7 @@ function handlePuzzleInteraction(item) {
 	}
 	
 	else if (currentArea === 'kamenna_tvar' && !inventory.includes('cerny_klic')) {
-		showPopup("Kamenný erb je na porostlý mechem. Po bližším prozkoumání je pod mechem v prohlubni vidět otvor ve tvaru klíčové dírky.");
+		showPopup("Velký balvan je na porostlý mechem. Po bližším prozkoumání je v blízkosti \" tváře \" vidět otvor ve tvaru klíčové dírky.");
 	} else {
 		showPopup(item.text);
 	}
@@ -778,6 +780,7 @@ function renderHotspots() {
 	// Odebere všechny prvky, které nejsou overlay nebo popisky
 	const removableElements = Array.from(viewport.children).filter(el =>
 		!el.classList.contains('loading-overlay') &&
+		!el.classList.contains('fade-overlay') &&
 		!el.classList.contains('direction-label') &&
 		!el.classList.contains('area-label') &&
 		!el.classList.contains('pohled-label') &&
@@ -860,7 +863,25 @@ function updateView() {
 		}, 250);
 
 		// 3. Aktualizace popisků
-		directionLabel.textContent = `Směr: ${currentDir}`;
+
+		let cz_currentDir = '';
+
+		switch (currentDir) {
+			case 'N':
+				cz_currentDir = 'S';
+				break;
+			case 'E':
+				cz_currentDir = 'V';
+				break;
+			case 'S':
+				cz_currentDir = 'J';
+				break;
+			case 'W':
+				cz_currentDir = 'Z';
+				break;
+		}
+
+		directionLabel.textContent = `Směr: ${cz_currentDir}`;
 		areaLabel.textContent = `Oblast: ${areaData.name}`;
 		pohledLabel.textContent = `${pohled}`;
 
@@ -878,7 +899,6 @@ function updateView() {
 		// 5. Vykreslení Hotspotů a Inventáře
 		renderHotspots();
 		updateInventoryDisplay();
-
 
 		//jeskyne - prvni prichod
 		if(currentArea === 'jeskyne' && currentDir === 'W' && !solvedPuzzles.includes('jeskyne_prichod')) {
@@ -989,6 +1009,8 @@ window.onload = function () {
 	let load_btn = document.getElementById('nacist_hru');
 	let save_btn = document.getElementById('ulozit_hru');
 
+	const fadeOverlay = document.getElementById("fadeOverlay");
+
 	ovladaci_prvky.style.display = 'none';
 	
 	start_btn.onclick = () => {
@@ -1000,11 +1022,29 @@ window.onload = function () {
 		}
 
 		if(potvrzeni) {
-			startScreen.style.display = 'none';
-			this.localStorage.setItem("hra_spustena", 1);
-			this.localStorage.setItem("saved_game", "");
-			ovladaci_prvky.style.display = 'block';
-			updateView();
+
+			fadeOverlay.style.opacity = 1;
+
+			setTimeout(() => {
+
+				startScreen.style.display = 'none';
+				this.localStorage.setItem("hra_spustena", 1);
+				this.localStorage.setItem("saved_game", "");
+				ovladaci_prvky.style.display = 'block';
+
+				//uvodni popup
+				let hra_spustena = this.localStorage.getItem("hra_spustena");
+				if(hra_spustena == 1 && currentArea === 'zacatek_cesty' && !solvedPuzzles.includes('uvod_popup')) {
+					showPopup(" \" Měl bych začít průzkumem okolních lesů. Možná tu někde v okolí Štandlu čeká stopa, která mi konečně něco objasní. \" ");
+					solvedPuzzles.push('uvod_popup');
+				}
+
+				fadeOverlay.style.opacity = 0;
+
+				updateView();
+
+			}, 1000);
+			
 		}
 		
 	};
