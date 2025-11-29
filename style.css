@@ -684,6 +684,19 @@ a {
 	margin-bottom: 40px;
 }
 
+#kniha.denik .zapis .den {
+	font-family: "Cormorant", serif;
+	font-size: 1.4rem;
+	line-height: 1.3;
+	font-weight: bold;
+}
+
+#kniha.denik .zapis .text {
+	font-family: "Cormorant", serif;
+	font-size: 1.3rem;
+	line-height: 1.3;
+}
+
 /* napoveda */
 
 #napoveda {
