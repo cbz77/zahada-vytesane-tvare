@@ -21,6 +21,7 @@ const INVENTORY_ITEMS = {
 	'strep': { name: 'Střepy', icon: 'fa-icicles', tooltip: 'Keramické střepy, nalezené v kameném pomníku.', type: "image", popupText: "<img src='../assets/images/inventory/strepy.png' class='inventory_img'>" },
 	'lopatka': { name: 'Lopatka', icon: 'fa-arrow-pointer', tooltip: 'Stará lopatka, nalezená u vykopávek.', type: "image", popupText: "<img src='../assets/images/inventory/lopatka.png' class='inventory_img'>" },
 	'denik': { name: 'Deník', icon: 'fa-book', tooltip: 'Potrhaný deník, ležel u těla Černé Barbory v tajné jeskyni.', type: "denik" },
+	'kniha': { name: 'Kniha', icon: 'fa-book-open', tooltip: 'Starodávná kniha o Štandlu. <br>Je v ní mnoho zajímavostí a pověstí.', type: "kniha" },
 };
 
 const ikona_stopa = '<br><br><i class="fa-solid fa-puzzle-piece color-red"></i> ';
@@ -387,7 +388,9 @@ const MAP = {
 				{ x: 450, y: 350, text: "Muzeum je otevřeno.", type: 'npc' }
 			]
 		},
-		S: { img: `../assets/bgr/muzeum/muzeum_S.png`, pohled: "cihlové kruhy", items: [] },
+		S: { img: `../assets/bgr/muzeum/muzeum_S_kniha.png`, pohled: "cihlové kruhy", items: [
+			{ x: 365, y: 420, text: "Stará kniha o Štandlu", type: 'item', itemKey: "kniha" },
+		] },
 		W: { img: `../assets/bgr/muzeum/muzeum_W.png`, pohled: "k frýdeckému zámku", forward: "frydecky_zamek", items: [] },
 	},
 };
@@ -527,6 +530,9 @@ function handleInventoryClick(itemId) {
 		}
 	}else if (item.type === 'denik') {
 		handleDenikClick();	
+	}
+	else if (item.type === 'kniha') {
+		handleKnihaClick();	
 	}
 	else if (item.popupText) {
 		// Standardní zobrazení extra textu pro jiné typy (pokud je definován)
@@ -854,6 +860,11 @@ function updateView() {
 			bgr_img = `../assets/bgr/jeskyne/jeskyne_W_bez.png`;
 		}
 
+		//vyjimka - sebrana kniha
+		if(inventory.includes('kniha') && currentArea === 'u_muzea' && currentDir === 'S') {
+			bgr_img = `../assets/bgr/muzeum/muzeum_S.png`;
+		}
+
 		viewport.style.backgroundImage = `url('${bgr_img}')`;
 
 		loadingOverlay.classList.remove('visible');
@@ -902,7 +913,7 @@ function updateView() {
 
 		//jeskyne - prvni prichod
 		if(currentArea === 'jeskyne' && currentDir === 'W' && !solvedPuzzles.includes('jeskyne_prichod')) {
-			showPopup("Proboha! To je snad Černá Barbora! <br> Kdysi jsem četl o jejím příběhu v městské kronice. Ale myslel jsem, že je to pouze pověra!");
+			showPopup("Proboha! To je snad Černá Barbora! <br> Četl jsem o jejím příběhu... ale myslel jsem, že je to pouze pověra!");
 			solvedPuzzles.push('jeskyne_prichod');
 		}
 
@@ -1109,6 +1120,13 @@ window.onload = function () {
 		denik.style.display = 'none';
 	};
 
+	/* zavrit knihu */
+	let close_kniha = document.getElementById('zavrit_knihu');
+	close_kniha.onclick = () => {
+		let kniha = document.getElementById('kniha');
+		kniha.style.display = 'none';
+	};
+
 	/* NAPOVEDA */
 
 	let napoveda_link = document.getElementById('napoveda_link');
@@ -1248,16 +1266,71 @@ function handleDenikClick(){
 
 	denik.style.display = 'flex';
 
-	Object.values(denik_zapisy).forEach((zapis) => {
+	if(!solvedPuzzles.includes('denik_precten')) {
 
-		let zapis_element = document.createElement('div');
-		zapis_element.classList.add('zapis');
-		zapis_element.innerHTML = `
-			<div class="den">${zapis.den}</div>
-			<div class="text">${zapis.text}</div>
-		`;
-    	denik_zapisy_div.appendChild(zapis_element);
+		Object.values(denik_zapisy).forEach((zapis) => {
 
-	});
+			let zapis_element = document.createElement('div');
+			zapis_element.classList.add('zapis');
+			zapis_element.innerHTML = `
+				<div class="den">${zapis.den}</div>
+				<div class="text">${zapis.text}</div>
+			`;
+			denik_zapisy_div.appendChild(zapis_element);
+			solvedPuzzles.push('denik_precten');
+
+		});
+
+	}
+
+}
+
+const kniha_zapisy = {
+
+	1: {
+		"den": "O štandlu",
+		"text": "Tajemný zalesněný vrch Štandl (lidově Štandel) se nachází 1,7km vzdušnou čarou západně od centra města Místek. Vrch je vysoký 350 m. n. m.<br>Na vrchol vedou dnes dvě hlavní cesty. Ta snadnější začíná na západním svahu kopce, druhá vede směrem od Místku z východu. Vrchol kopce a vlastně i hradní jádro obklopoval ze všech stran kruhový či oválný hluboký příkop s vyvýšeným valem. Dodnes je uprostřed jádra zakrytý vchod do podzemní chodby."
+	},
+	2: {
+		"den": "Zlatý poklad",
+		"text": "Kdysi dávno Štandl nestál, když zemřel slavný hunský kmenový náčelník Attila, položili jej ve zlaté rakvi spolu s mnoha poklady na tomto místě do země a vojáci po několik týdnů nosili hlínu a kameny, ze které nasypali mohylu, dnešní Štandl. Naposledy se pokoušel najít tento poklad jeden starousedlík ze Sviadnova."
+	},
+	3: {
+		"den": "Černá paní Barbora",
+		"text": "Na severním svahu Štandlu stávala velká skála, dnes z ní zbyl menší kousek. Kdysi byl na skále k přečtení nápis \"Černá paní Barbora\". Pod skálou má být zasypaná jeskyně, ve které se ukrývala uprchlá mladá jeptiška, černých vlasů a modrých očí. Hukvaldský hradní hejtman rytíř Harasovský ji svedl a zde se milenci scházeli. Jeptiška hořce litovala porušení řeholního slibu a když pro ni hejtman jel, aby si ji odvedl na hrad, strhla se strašná bouře a za rachocení skal jeskyně zmizela. Ještě dlouho slyšeli jeptišku naříkat v podzemí."
+	},
+	4: {
+		"den": "Propadlý hrad",
+		"text": "Ještě kolem roku 1850 byly na Štandlu ke spatření skrovné zbytky zdí zaniklého hrádku, nazývaného údajně Friedeke nebo Na zámčisku. V nepřístupném podzemí má být ukryt poklad a velká jáma na vrcholu je prý zbytkem po propadlém hradu a jeho sklepeních. Archeologickým výzkumem zde byla potvrzena podzemní chodba."
+	}
+
+}
+
+function handleKnihaClick(){
+
+	let kniha = document.getElementById('kniha');
+	let kniha_zapisy_div = document.getElementById('kniha_zapisy');
+
+	kniha.style.display = 'flex';
+
+	if(!solvedPuzzles.includes('kniha_prectena')) {
+
+		Object.values(kniha_zapisy).forEach((zapis) => {
+
+			let zapis_element = document.createElement('div');
+			zapis_element.classList.add('zapis');
+			zapis_element.innerHTML = `
+				<div class="den">${zapis.den}</div>
+				<div class="text">${zapis.text}</div>
+			`;
+			
+			kniha_zapisy_div.appendChild(zapis_element);
+			solvedPuzzles.push('kniha_prectena');
+
+		});
+
+	}
+
+	
 
 }
