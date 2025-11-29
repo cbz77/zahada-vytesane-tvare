@@ -780,6 +780,7 @@ function renderHotspots() {
 	// Odebere všechny prvky, které nejsou overlay nebo popisky
 	const removableElements = Array.from(viewport.children).filter(el =>
 		!el.classList.contains('loading-overlay') &&
+		!el.classList.contains('fade-overlay') &&
 		!el.classList.contains('direction-label') &&
 		!el.classList.contains('area-label') &&
 		!el.classList.contains('pohled-label') &&
@@ -899,7 +900,6 @@ function updateView() {
 		renderHotspots();
 		updateInventoryDisplay();
 
-
 		//jeskyne - prvni prichod
 		if(currentArea === 'jeskyne' && currentDir === 'W' && !solvedPuzzles.includes('jeskyne_prichod')) {
 			showPopup("Proboha! To je snad Černá Barbora! <br> Kdysi jsem četl o jejím příběhu v městské kronice. Ale myslel jsem, že je to pouze pověra!");
@@ -1009,6 +1009,8 @@ window.onload = function () {
 	let load_btn = document.getElementById('nacist_hru');
 	let save_btn = document.getElementById('ulozit_hru');
 
+	const fadeOverlay = document.getElementById("fadeOverlay");
+
 	ovladaci_prvky.style.display = 'none';
 	
 	start_btn.onclick = () => {
@@ -1020,11 +1022,29 @@ window.onload = function () {
 		}
 
 		if(potvrzeni) {
-			startScreen.style.display = 'none';
-			this.localStorage.setItem("hra_spustena", 1);
-			this.localStorage.setItem("saved_game", "");
-			ovladaci_prvky.style.display = 'block';
-			updateView();
+
+			fadeOverlay.style.opacity = 1;
+
+			setTimeout(() => {
+
+				startScreen.style.display = 'none';
+				this.localStorage.setItem("hra_spustena", 1);
+				this.localStorage.setItem("saved_game", "");
+				ovladaci_prvky.style.display = 'block';
+
+				//uvodni popup
+				let hra_spustena = this.localStorage.getItem("hra_spustena");
+				if(hra_spustena == 1 && currentArea === 'zacatek_cesty' && !solvedPuzzles.includes('uvod_popup')) {
+					showPopup(" \" Měl bych začít průzkumem okolních lesů. Možná tu někde v okolí Štandlu čeká stopa, která mi konečně něco objasní. \" ");
+					solvedPuzzles.push('uvod_popup');
+				}
+
+				fadeOverlay.style.opacity = 0;
+
+				updateView();
+
+			}, 1000);
+			
 		}
 		
 	};
