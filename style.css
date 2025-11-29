@@ -52,7 +52,7 @@ h2.aneb {
 	color: #ffffff;
 	text-shadow: 0px 0px 16px #b53b3b;
 	position: relative;
-    top: -20px;
+    top: 0px;
     left: 50px;
 }
 
@@ -406,6 +406,26 @@ a {
 	.controls-row {
 		flex-direction: column;
 		gap: 10px;
+	}
+}
+
+@media(max-height: 800px) {
+	.logo{
+		position: fixed;
+		top: 10px;
+		left: 10px;
+		max-width: 200px;
+	}
+	
+	.controls-row {
+		margin-top: 0px;
+	}
+	.instruction-text {
+		margin:5px;
+		text-align: left;
+	}
+	.game-container {
+		gap:10px;
 	}
 }
 
