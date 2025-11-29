@@ -135,7 +135,7 @@ a {
 	height:100px;
 }
 
-.save-game button {
+.save-game #ulozit_hru {
 	position: absolute;
 	bottom:0px;
 	left:0px;
@@ -145,7 +145,18 @@ a {
 	transition: opacity 0.2s ease-in-out;
 }
 
-.save-game:hover button {
+.save-game #nacist_hru {
+	position: absolute;
+	bottom:0px;
+	left:30px;
+	padding:5px;
+	color:white;
+	opacity: 0;
+	transition: opacity 0.2s ease-in-out;
+}
+
+.save-game:hover #ulozit_hru,
+.save-game:hover #nacist_hru {
 	opacity: 1;
 }
 
@@ -642,6 +653,29 @@ a {
 	margin-bottom: 40px;
 }
 
+/* napoveda */
+
+#napoveda {
+	font-family: 'Cormorant';
+	color: wheat;
+	font-size: 1.1rem;
+	text-transform: none;
+}
+
+#napoveda h2 {
+	color: var(--lighter-red);
+	text-align: center;
+}
+
+#napoveda h3 {
+	color: var(--lighter-red);
+	margin-bottom: 10px;
+}
+
+#napoveda ul li{
+	margin-top: 0px;
+}
+
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
   * {
@@ -662,4 +696,8 @@ a {
     background-color: #9f000044;
     border-radius: 10px;
     border: 3px none #ffffff;
+  }
+
+  #lightbox-backdrop.modal-backdrop {
+	z-index: 110;
   }
