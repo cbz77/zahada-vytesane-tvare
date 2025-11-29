@@ -1103,10 +1103,11 @@ window.onload = function () {
 
 		let popupText = 
 			"Vytvořil: <span class='color-lighter-red'>Jan Gerek</span><br><br>" +
+			"Texty: <span class='color-lighter-red'>Hrady.cz, Jan Gerek</span><br><br>" +
 			"Pomáhali: <br><br>"+
 				"<ul class='credits-ul'>" +
 					"<li><i class='fas fa-photo-film'></i> <a href='https://www.photos.google.com' target='_blank'>Google Photos</a>, <a href='https://www.photopea.com/' target='_blank'>Photopea</a></li>" +
-					"<li><i class='fas fa-robot'></i> <a href='https://gemini.google.com/' target='_blank'>Google Gemini</li>" +
+					"<li><i class='fas fa-robot'></i> <a href='https://gemini.google.com/' target='_blank'>Google Gemini, ChatGPT</li>" +
 					"<li><i class='fas fa-font-awesome'></i> <a href='https://fontawesome.com/' target='_blank'>Font Awesome</li>"+
 				"</ul>"
 
