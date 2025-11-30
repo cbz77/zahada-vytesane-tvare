@@ -373,7 +373,7 @@ const MAP = {
 			img: `../assets/bgr/jost_hrob/jost_hrob_E.png`, pohled: "stará škola", items: [],
 		},
 		S: { img: `../assets/bgr/jost_hrob/jost_hrob_S.png`, pohled: "socha sv. Floriána", items: [
-			{ x: 250, y: 400, text: "Socha patrona hasičů, sv. Floriána", type: 'text' }
+			{ x: 600, y: 300, text: "Socha patrona hasičů, sv. Floriána", type: 'text' }
 		] },
 		N: { img: `../assets/bgr/jost_hrob/jost_hrob_N.png`, pohled: "náhrobní kámen", items: [
 			{ x: 250, y: 400, text: "Na náhrobním kameni je velký, kamenný kříž. <br>Nakreslím si ho.<br><br> <img src='assets/bgr/jost_hrob/nahrobek.png' class='inventory_img' onclick='event.stopPropagation(); showLightbox(\"assets/bgr/jost_hrob/nahrobek.png\")'> " + ikona_stopa + " Získali jste stopu <span class='color-lighter-red'>kříž.</span>", itemKey: 'kriz_z_hrobu', type: 'item' }
