@@ -403,6 +403,7 @@ let currentDirectionIndex = 1; // Výchozí směr: E (východ)
 let inventory = []; // Skladuje ID předmětů
 let solvedPuzzles = [];
 let addedItems = [];
+let precteneKnihy = [];
 
 // --- ELEMENTY DOM ---
 const viewport = document.getElementById('viewport');
@@ -416,6 +417,9 @@ const puzzleModalBackdrop = document.getElementById('puzzle-modal-backdrop');
 const popupText = document.getElementById('popup-text');
 const inventoryDisplay = document.getElementById('inventory-display');
 const startScreen = document.getElementById('start-screen');
+const fadeOverlay = document.getElementById("fadeOverlay");
+const endingScreen = document.getElementById("ending-screen");
+
 
 // --- INVENTÁŘ A MODALY ---
 
@@ -774,8 +778,19 @@ window.solvePuzzle = function () {
  */
 function handleKonec() {
 	if (currentArea === 'konec') {
-		showPopup("<span class='color-lighter-red'>Temnota pohltila okolí...</span><br><br>Kámen se zavalil zpět a pochodně zhasly. Nyní tě nejspíš čeká stejný osud jako Černou Barboru! <br><br> <span class='color-lighter-red'>Konec hry</span>");
-	} 
+		showPopup("<span class='color-lighter-red'>Temnota pohltila okolí...</span><br><br>Kámen se zavalil zpět a pochodně zhasly. Nyní tě nejspíš čeká stejný osud jako Černou Barboru!");
+
+		let endingText = document.getElementById('ending-text');
+
+		setTimeout(() => {
+
+			endingText.innerHTML = "Takhle končí tvůj příběh...<br><br>";
+
+			endingScreen.style.display = 'flex';
+			endingScreen.style.opacity = 1;
+
+		}, 20000);
+	}
 }
 
 
@@ -792,7 +807,8 @@ function renderHotspots() {
 		!el.classList.contains('pohled-label') &&
 		!el.classList.contains('start-screen') &&
 		!el.classList.contains('save-game') &&
-		!el.classList.contains('denik')
+		!el.classList.contains('denik') &&
+		!el.classList.contains('ending-screen')
 	);
 	removableElements.forEach(el => el.remove());
 
@@ -853,6 +869,11 @@ function updateView() {
 		//vyjimka - odemkla jeskyne
 		if(solvedPuzzles.includes('kameny_erb_detail') && currentArea === 'kamenny_erb' && currentDir === 'W') {
 			bgr_img = `../assets/bgr/kamenny_erb/kamenny_erb_W_odvalen.png`; //odvaleny balvan do jeskyne
+		}
+
+		//vyjimka - po vstupu do jeskyne zase zrusit cestu zpet kvuli nacteni hry bez refreshe
+		if(currentArea === 'jeskyne') {
+			MAP['kamenny_erb']['W'].forward = 'kamenna_tvar';
 		}
 
 		//vyjimka - sebrany denik
@@ -1019,8 +1040,7 @@ window.onload = function () {
 	let load_btn_start = document.getElementById('nacist_hru_start');
 	let load_btn = document.getElementById('nacist_hru');
 	let save_btn = document.getElementById('ulozit_hru');
-
-	const fadeOverlay = document.getElementById("fadeOverlay");
+	let restart_btn = document.getElementById('restart-game');
 
 	ovladaci_prvky.style.display = 'none';
 	
@@ -1095,6 +1115,12 @@ window.onload = function () {
 			}
 		}
 	};
+
+	/* RESTART */
+
+	restart_btn.onclick = () => {
+		this.location.reload();
+	}
 
 	/* CREDITS */
 
@@ -1267,7 +1293,7 @@ function handleDenikClick(){
 
 	denik.style.display = 'flex';
 
-	if(!solvedPuzzles.includes('denik_precten')) {
+	if(!precteneKnihy.includes('denik')) {
 
 		Object.values(denik_zapisy).forEach((zapis) => {
 
@@ -1278,7 +1304,7 @@ function handleDenikClick(){
 				<div class="text">${zapis.text}</div>
 			`;
 			denik_zapisy_div.appendChild(zapis_element);
-			solvedPuzzles.push('denik_precten');
+			precteneKnihy.push('denik');
 
 		});
 
@@ -1314,7 +1340,7 @@ function handleKnihaClick(){
 
 	kniha.style.display = 'flex';
 
-	if(!solvedPuzzles.includes('kniha_prectena')) {
+	if(!precteneKnihy.includes('kniha')) {
 
 		Object.values(kniha_zapisy).forEach((zapis) => {
 
@@ -1326,10 +1352,12 @@ function handleKnihaClick(){
 			`;
 			
 			kniha_zapisy_div.appendChild(zapis_element);
-			solvedPuzzles.push('kniha_prectena');
+			precteneKnihy.push('kniha');
 
 		});
 
+	}else{
+		console.log("kniha jiz prectena");
 	}
 
 	
