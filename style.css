@@ -393,42 +393,6 @@ a {
 	font-size: 2rem;
 }
 
-@media (max-width: 900px) {
-	
-	.mobil {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-	}
-
-	.controls-row {
-		flex-direction: column;
-		gap: 10px;
-	}
-}
-
-@media(max-height: 800px) {
-	.logo{
-		position: fixed;
-		top: 10px;
-		left: 10px;
-		max-width: 200px;
-	}
-	
-	.controls-row {
-		margin-top: 0px;
-	}
-	.instruction-text {
-		margin:5px;
-		text-align: left;
-	}
-	.game-container {
-		gap:10px;
-	}
-}
-
 .add_item_text {
 	color: var(--lighter-red);
 	font-size: 1.1rem;
@@ -767,3 +731,48 @@ a {
   }
 
 
+@media (max-width: 900px) {
+	
+	.mobil {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+	}
+
+	.controls-row {
+		flex-direction: column;
+		gap: 10px;
+	}
+}
+
+@media(max-height: 800px) {
+	.logo{
+		position: fixed;
+		top: 10px;
+		left: 10px;
+		max-width: 200px;
+	}
+	
+	.controls-row {
+		margin-top: 0px;
+	}
+	.instruction-text {
+		margin:5px;
+		text-align: left;
+	}
+	.game-container {
+		gap:10px;
+	}
+	.start-screen-text p{
+		font-size:1rem;
+	}
+	.start-screen-buttons{
+		margin-top:0px;
+	}
+	.start-screen-buttons .control-button{
+		padding:10px;
+		font-size: 0.8rem;
+	}
+}
