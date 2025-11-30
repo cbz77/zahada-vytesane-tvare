@@ -1324,7 +1324,7 @@ const kniha_zapisy = {
 	},
 	3: {
 		"den": "Černá paní Barbora",
-		"text": "Na severním svahu Štandlu stávala velká skála, dnes z ní zbyl menší kousek. Kdysi byl na skále k přečtení nápis \"Černá paní Barbora\". Pod skálou má být zasypaná jeskyně, ve které se ukrývala uprchlá mladá jeptiška, černých vlasů a modrých očí. Hukvaldský hradní hejtman rytíř Harasovský ji svedl a zde se milenci scházeli. Jeptiška hořce litovala porušení řeholního slibu a když pro ni hejtman jel, aby si ji odvedl na hrad, strhla se strašná bouře a za rachocení skal jeskyně zmizela. Ještě dlouho slyšeli jeptišku naříkat v podzemí."
+		"text": "Na jihovýchodním svahu Štandlu stávala velká skála, dnes z ní zbyl menší kousek. Kdysi byl na skále k přečtení nápis \"Černá paní Barbora\". Pod skálou má být zasypaná jeskyně, ve které se ukrývala uprchlá mladá jeptiška, černých vlasů a modrých očí. Hukvaldský hradní hejtman rytíř Harasovský ji svedl a zde se milenci scházeli. Jeptiška hořce litovala porušení řeholního slibu a když pro ni hejtman jel, aby si ji odvedl na hrad, strhla se strašná bouře a za rachocení skal jeskyně zmizela. Ještě dlouho slyšeli jeptišku naříkat v podzemí. V dnešní době je možné v určitém místě najít velký balvan s podivnou rytinou, která připomíná obličej a zvláštní klíčovou dírkou, ke které nikdo nemá klíč..."
 	},
 	4: {
 		"den": "Propadlý hrad",
