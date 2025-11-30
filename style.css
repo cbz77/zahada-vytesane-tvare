@@ -62,9 +62,8 @@ a {
 }
 
 #viewport {
-	width: 100%;
+	width: 800px;
 	height: 600px;
-	max-height: 70vh;
 	background-size: cover;
 	background-position: center;
 	border: 8px solid #3d3229;
@@ -813,14 +812,19 @@ a {
 	}
 }
 
-@media(max-height: 800px) {
+@media(max-height: 1070px) {
+
+	#viewport {
+	width: 700px;
+	height: 500px;
+	}
+
 	.logo{
 		position: fixed;
 		top: 10px;
 		left: 10px;
 		max-width: 200px;
 	}
-	
 	.controls-row {
 		margin-top: 0px;
 	}
@@ -830,6 +834,7 @@ a {
 	}
 	.game-container {
 		gap:10px;
+		align-items: center;
 	}
 	.start-screen-text p{
 		font-size:1rem;
@@ -840,5 +845,11 @@ a {
 	.start-screen-buttons .control-button{
 		padding:10px;
 		font-size: 0.8rem;
+	}
+	.denik {
+		height: 460px;
+	}
+	.denik .zapis .text {
+		font-size: 1.5rem;
 	}
 }
