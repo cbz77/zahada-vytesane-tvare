@@ -330,7 +330,9 @@ const MAP = {
 		S: { img: `../assets/bgr/zamek_nadvori/nadvori_S.png`, pohled: "zámecké nádvoří", items: [
 			{ x: 600, y: 300, text: "Nádvoří zeje prázdnotou.", type: 'text' }
 		] },
-		W: { img: `../assets/bgr/zamek_nadvori/nadvori_W.png`, pohled: "k věži", forward: "vez", items: [] },
+		W: { img: `../assets/bgr/zamek_nadvori/nadvori_W.png`, pohled: "k věži", forward: "vez", items: [
+			{ x: 350, y: 200, text: "Věž frýdeckého zámku. Vznikla při přestavbě zámku po roce 1688.", type: 'text' }
+		] },
 		N: { img: `../assets/bgr/zamek_nadvori/nadvori_N.png`, pohled: "před frýdecký zámek", forward: "frydecky_zamek", items: [] },
 	},
 	vez: {
@@ -352,12 +354,15 @@ const MAP = {
 			{ x: 430, y: 350, text: "Kašna se sochou sv. Floriána. <br>V kašně plave několik listů a větviček. Voda je ale čistá.", type: 'text' },
 			{ x: 530, y: 170, text: "Svatojánská věž se tyčí nad náměstím.", type: 'text' }
 		] },
-		W: { img: `../assets/bgr/zamek_namesti/zamek_namesti_W.png`, pohled: "do zámku", forward: "zamek_nadvori", items: [] },
+		W: { img: `../assets/bgr/zamek_namesti/zamek_namesti_W.png`, pohled: "do zámku", forward: "zamek_nadvori", items: [
+			{ x: 400, y: 300, text: "Frýdecký zámek, stojí zde již od druhé poloviny 13. století.", type: 'text' }
+		] },
 	},
 	kostel_josta: {
 		name: "Kostel sv. Jošta",
 		E: { img: `../assets/bgr/jost/jost_E.png`, pohled: "vstup do kostela", items: [
-			{ x: 650, y: 380, text: "Pozdně renesanční stavba z roku 1612. <br> Okolní park do konce 19. století sloužil jako hřbitov.", type: 'text' }
+			{ x: 650, y: 380, text: "Pozdně renesanční stavba z roku 1612. <br> Okolní park do konce 19. století sloužil jako hřbitov.", type: 'text' },
+			{ x: 130, y: 250, text: "Socha sv. Barbory, původně byla umístěna u vstupu na městský hřbitov.", type: 'text' }
 		] },
 		S: { img: `../assets/bgr/jost/jost_S.png`, pohled: "okolo kostela", forward: "vedle_kostela", },
 		N: { img: `../assets/bgr/jost/jost_N.png`, pohled: "po schodišti na náměstí", forward: "zamek_namesti", items: [
@@ -1128,7 +1133,8 @@ window.onload = function () {
 	credits.onclick = () => {
 
 		let popupText = 
-			"Vytvořil: <span class='color-lighter-red'>Jan Gerek</span><br><br>" +
+			"Vytvořil: <span class='color-lighter-red'>Jan Gerek</span><br>" +
+			"Fotografie lokací: <span class='color-lighter-red'>Jan Gerek</span><br><br>" +
 			"Texty: <span class='color-lighter-red'>Hrady.cz, Jan Gerek</span><br><br>" +
 			"Pomáhali: <br><br>"+
 				"<ul class='credits-ul'>" +
